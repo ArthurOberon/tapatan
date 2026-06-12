@@ -2,8 +2,8 @@ NAME 				=	tapatan
 
 CXX 				=	c++
 CXXFLAGS			=	-Wall -Wextra -Werror
-SRC_DIR 			=	./
-INCLUDES_DIR 		=	./
+SRC_DIR 			=	./srcs/
+INCLUDES_DIR 		=	./includes/
 OBJ_DIR 			=	.obj/
 INCLUDES_H			=	-I./$(INCLUDES_DIR)
 
