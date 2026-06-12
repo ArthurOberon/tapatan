@@ -144,7 +144,6 @@ void	Game_Graphic::run()
 			this->round += r;
 		}
 	}
-
 }
 
 void		Game_Graphic::set_cursor(s_vector2 mouse)

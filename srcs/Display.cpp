@@ -39,31 +39,6 @@ Display::~Display() {}
 
 void	Display::display_game(char grid[3][3])
 {
-	// while (this->window.isOpen())
-	// {
-	// 	sf::Event event;
-	// 	while (this->window.pollEvent(event))
-	// 	{
-	// 		if (event.type == sf::Event::Closed)
-	// 			this->window.close();
-	// 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-	// 		{
-	// 			sf::Vector2f mousePos = this->window.mapPixelToCoords(sf::Mouse::getPosition(this->window));
-	// 			for (int i = 0; i < 3; ++i)
-	// 			{
-	// 				for (int j = 0; j < 3; ++j)
-	// 				{
-	// 					sf::Sprite s = this->sprts_pieces[i][j].sprite;
-
-	// 					if (s.getGlobalBounds().contains(mousePos)) // --> sprite click on by mouse ?
-	// 					{
-	// 						game.set_cursor((s_vector2){mousePos.x, mousePos.y});
-	// 						game.key_enter_handle();
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
 	this->window.clear();
 	this->window.draw(sprt_background);
 

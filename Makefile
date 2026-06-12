@@ -1,4 +1,4 @@
-NAME 				=	tapatan
+NAME 				=	tapatan # 3 Men's Morris
 
 CXX 				=	c++
 CXXFLAGS			=	-Wall -Wextra -Werror
@@ -7,14 +7,18 @@ INCLUDES_DIR 		=	./includes/
 OBJ_DIR 			=	.obj/
 INCLUDES_H			=	-I./$(INCLUDES_DIR)
 
-DEPS 				=	Makefile $(INCLUDES_DIR)Game.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)Game_Graphic.hpp $(INCLUDES_DIR)Display.hpp
+# DEPS 				=	Makefile $(INCLUDES_DIR)Game.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)Game_Graphic.hpp $(INCLUDES_DIR)Display.hpp
+DEPS 				=	Makefile $(INCLUDES_DIR)Game_.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)ShellRenderer.hpp $(INCLUDES_DIR)ShellInput.hpp
 SRCS	=  $(addprefix $(SRC_DIR), \
 						main.cpp \
-						Game.cpp \
+						Game_.cpp \
 						Piece_Mov.cpp \
-						Game_Graphic.cpp \
-						Display.cpp \
+						ShellRenderer.cpp \
+						ShellInput.cpp \
 						)
+# Game.cpp \
+# Game_Graphic.cpp \
+# Display.cpp \
 
 
 OBJS 			=	$(patsubst $(SRC_DIR)%.cpp,$(OBJ_DIR)%.o, $(SRCS))
