@@ -7,19 +7,16 @@ INCLUDES_DIR 		=	./includes/
 OBJ_DIR 			=	.obj/
 INCLUDES_H			=	-I./$(INCLUDES_DIR)
 
-# DEPS 				=	Makefile $(INCLUDES_DIR)Game.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)Game_Graphic.hpp $(INCLUDES_DIR)Display.hpp
-DEPS 				=	Makefile $(INCLUDES_DIR)Game_.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)ShellRenderer.hpp $(INCLUDES_DIR)ShellInput.hpp
+DEPS 				=	Makefile $(INCLUDES_DIR)Game.hpp $(INCLUDES_DIR)Piece_Mov.hpp $(INCLUDES_DIR)ShellRenderer.hpp $(INCLUDES_DIR)ShellInput.hpp  $(INCLUDES_DIR)SFMLRenderer.hpp $(INCLUDES_DIR)SFMLInput.hpp
 SRCS	=  $(addprefix $(SRC_DIR), \
 						main.cpp \
-						Game_.cpp \
+						Game.cpp \
 						Piece_Mov.cpp \
 						ShellRenderer.cpp \
 						ShellInput.cpp \
+						SFMLRenderer.cpp \
+						SFMLInput.cpp \
 						)
-# Game.cpp \
-# Game_Graphic.cpp \
-# Display.cpp \
-
 
 OBJS 			=	$(patsubst $(SRC_DIR)%.cpp,$(OBJ_DIR)%.o, $(SRCS))
 

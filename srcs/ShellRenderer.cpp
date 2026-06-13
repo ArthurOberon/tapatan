@@ -12,11 +12,11 @@ ShellRenderer::~ShellRenderer()
 }
 
 
-void	ShellRenderer::draw(const Game_ & game)
+void	ShellRenderer::draw(const Game & game)
 {
 	if (game.getGameState() == GameState::Winner)
 	{
-		this->drawWinner(game.getPlayerTurn());
+		drawWinner(game.getPlayerTurn());
 		return ;
 	}
 

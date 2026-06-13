@@ -27,6 +27,7 @@ struct s_Action
 {
 	ActionType type;
 	Direction dir;
+	s_vector2 target;
 };
 
 enum class 	GameState

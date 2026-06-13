@@ -6,109 +6,57 @@ Game::Game(/* args */) : round(0), cursor({0, 0})
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			this->grid[i][j] = ' ';
+			grid[i][j] = ' ';
 		}
 	}
 }
 
 Game::~Game() {}
 
-void	Game::draw_result() const
-{
-	clear();
-	printw("player %d win !\n", this->round % 2 + 1);
-	refresh();
-}
 
-void	Game::draw_game()
-{
-	clear();
-	for (int y = 0; y < 3; ++y)
-	{
-		for (int x = 0; x < 3; ++x)
-		{
-			if (x == this->cursor.x && y == this->cursor.y)
-				attron(A_REVERSE);
-
-			printw("[%c] ", this->grid[y][x]);
-
-			if (x == this->cursor.x && y == this->cursor.y)
-				attroff(A_REVERSE);
-		}
-		printw("\n");
-	}
-	printw("turn : player %d\n", this->round % 2 + 1);
-	// printw("x : %d\n", this->cursor.x);
-	// printw("y : %d\n", this->cursor.y);
-	refresh();
-}
-
-void	Game::key_arrow_handle(const int key)
-{
-	switch (key)
-	{
-		case KEY_UP:
-			if (this->cursor.y > 0)
-				--this->cursor.y;
-			break;
-
-		case KEY_DOWN:
-			if (this->cursor.y < 2)
-				++this->cursor.y;
-			break;
-
-		case KEY_LEFT:
-			if (this->cursor.x > 0)
-				--this->cursor.x;
-			break;
-
-		case KEY_RIGHT:
-			if (this->cursor.x < 2)
-				++this->cursor.x;
-			break;
-
-		default:
-			break;
-	}
-}
-
-int	Game::key_enter_handle(const int key)
+int	Game::applyAction(const s_Action action)
 {
 	int	r = 0;
-	int	turn = this->round % 2;
-	char	*cursor_square;
-	s_vector2 mov_p_pos;
 
-	if (key == '\n' || key == ' ')
+	switch (action.type)
 	{
-		cursor_square = &(this->grid[this->cursor.y][this->cursor.x]);
-		if (this->round < 6)
+	case ActionType::MoveCursor :
+		moveCursor(action.dir);
+		break;
+	
+	case ActionType::Enter :
+		if (gameState == GameState::Playing)
 		{
-			if (*cursor_square == ' ')
-			{
-				if (turn == 0)
-					*cursor_square = 'X';
-				else
-					*cursor_square = 'O';
-				r = 1;
-			}
+			if (action.target.x != -1)
+				setCursor(action.target);
+			r = selectCell(getCursor());
+			break;
 		}
-		else
+		else if (gameState == GameState::Finished)
 		{
-			mov_p_pos = this->piece_mov.get_pos();
-			r = this->piece_mov.mov_piece(turn, this->cursor, cursor_square, &(grid[mov_p_pos.y][mov_p_pos.x]));
+			gameState = GameState::Winner;
 		}
-	}
+		else if (gameState == GameState::Winner)
+		{
+			gameState = GameState::Quit;
+		}
+		break;
 
+	case ActionType::Quit :
+		return -1;
+	
+	default:
+		break;
+	}
 	return r;
 }
 
-int	Game::check_win() const
+int	Game::checkWin() const
 {
 	char	c;
 	int	count = 0;
 
-	if (round % 2 == 0)
+	if (getPlayerTurn() == 1)
 		c = 'X';
 	else
 		c = 'O';
@@ -151,36 +99,94 @@ int	Game::check_win() const
 	return 0;
 }
 
-void	Game::run()
+void	Game::moveCursor(Direction dir)
 {
-	int running = 1;
-	int r = 0;
-	int	key;
-
-	while (running)
+	switch (dir)
 	{
-		this->draw_game();
-		key = getch();
-		this->key_arrow_handle(key);
-		r = this->key_enter_handle(key);
-		running = !this->check_win();
-		this->round += r;
-	}
+		case Direction::UP:
+			if (cursor.y > 0)
+				--cursor.y;
+			break;
 
-	while (1)
-	{
-		this->draw_game();
-		key = getch();
-		this->key_arrow_handle(key);
-		if (key == '\n' || key == ' ')
+		case Direction::DOWN:
+			if (cursor.y < 2)
+				++cursor.y;
+			break;
+
+		case Direction::LEFT:
+			if (cursor.x > 0)
+				--cursor.x;
+			break;
+
+		case Direction::RIGHT:
+			if (cursor.x < 2)
+				++cursor.x;
+			break;
+
+		default:
 			break;
 	}
+}
 
-	while (1)
+int	Game::selectCell(s_vector2 cell_pos)
+{
+	int	r = 0;
+	int	turn = round % 2;
+	char	*cursor_square;
+	s_vector2 mov_p_pos;
+
+	cursor_square = &(grid[cell_pos.y][cell_pos.x]);
+	if (round < 6)
 	{
-		this->draw_result();
-		key = getch();
-		if (key == '\n' || key == ' ')
-			break;
+		if (*cursor_square == ' ')
+		{
+			if (turn == 0)
+				*cursor_square = 'X';
+			else
+				*cursor_square = 'O';
+			r = 1;
+		}
 	}
+	else
+	{
+		mov_p_pos = piece_mov.get_pos();
+		r = piece_mov.mov_piece(turn, cell_pos, cursor_square, &(grid[mov_p_pos.y][mov_p_pos.x]));
+	}
+
+	return r;
+}
+
+char	Game::getGridCell(s_vector2	pos) const
+{
+	return grid[pos.x][pos.y];
+}
+
+int	Game::getPlayerTurn() const
+{
+	return round % 2 + 1;
+}
+
+void	Game::setCursor(s_vector2 cursor)
+{
+	this->cursor = cursor;
+}
+
+const s_vector2 &	Game::getCursor() const
+{
+	return cursor;
+}
+
+void	Game::addOneRound()
+{
+	++round;
+}
+
+GameState	Game::getGameState() const
+{
+	return gameState;
+}
+
+void	Game::setGameStateFinish()
+{
+	gameState = GameState::Finished;
 }

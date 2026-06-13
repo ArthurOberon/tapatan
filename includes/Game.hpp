@@ -1,9 +1,7 @@
 #pragma once
 
-#include <iostream>
-#include <ncurses.h>
-#include "Piece_Mov.hpp"
 #include "vector2.hpp"
+#include "Piece_Mov.hpp"
 
 using namespace std;
 
@@ -14,17 +12,29 @@ private:
 	int	round;
 	s_vector2	cursor;
 	Piece_Mov	piece_mov;
+	GameState	gameState;
 
-	void	draw_game();
-	void	key_arrow_handle(const int key);
-	void	draw_result() const;
-	int	key_enter_handle(const int key);
-	int	check_win() const;
-	
+	void	moveCursor(Direction dir);
+	int	selectCell(s_vector2 cell_pos);
+
 	public:
 	Game(/* args */);
 	~Game();
-	void	run();
+
+	int	applyAction(const s_Action action);
+
+	int	checkWin() const;
+
+	char	getGridCell(s_vector2	pos) const;
+
+	int	getPlayerTurn() const;
 	
+	void	setCursor(s_vector2 cursor);
+	const s_vector2 &	getCursor() const;
+
+	void	addOneRound();
+
+	GameState	getGameState() const;
+	void	setGameStateFinish();
 
 };

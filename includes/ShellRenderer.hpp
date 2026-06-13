@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ncurses.h>
-#include "Game_.hpp"
+#include "Game.hpp"
 
 class ShellRenderer
 {
@@ -11,6 +11,6 @@ public:
 	ShellRenderer(/* args */);
 	~ShellRenderer();
 
-	void	draw(const Game_ & game);
+	void	draw(const Game & game);
 	void	drawWinner(const int player) const;
 };
