@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game(/* args */) : round(0), cursor({0, 0})
+Game::Game(/* args */) : round(0), cursor({0, 0}), gameState(GameState::Playing)
 {
 	for (int i = 0; i < 3; ++i)
 	{

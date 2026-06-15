@@ -11,7 +11,6 @@ ShellRenderer::~ShellRenderer()
 	endwin();
 }
 
-
 void	ShellRenderer::draw(const Game & game)
 {
 	if (game.getGameState() == GameState::Winner)

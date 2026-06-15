@@ -19,7 +19,7 @@ const s_Action	ShellInput::poll() const
 	case KEY_RIGHT:
 		return (s_Action{ActionType::MoveCursor, Direction::RIGHT, {-1, -1}});
 
-	case ' ':
+	case ' ' :
 	case '\n' :
 		return (s_Action{ActionType::Enter, Direction::NDF, {-1, -1}});
 
