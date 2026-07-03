@@ -23,7 +23,7 @@ const s_Action	SFMLInput::poll(sf::RenderWindow & window, const sf::FloatRect hi
 				{
 					if (hitbox[i][j].contains(mousePos))
 					{
-						return (s_Action{ActionType::Enter, Direction::NDF, {j, i}});
+						return (s_Action{ActionType::Enter, Direction::NDF, {i, j}});
 					}
 				}
 			}

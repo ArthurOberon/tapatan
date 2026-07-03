@@ -1,7 +1,7 @@
 NAME 				=	tapatan # 3 Men's Morris
 
 CXX 				=	c++
-CXXFLAGS			=	-Wall -Wextra -Werror
+CXXFLAGS			=	-Wall -Wextra -Werror -g3
 SRC_DIR 			=	./srcs/
 INCLUDES_DIR 		=	./includes/
 OBJ_DIR 			=	.obj/

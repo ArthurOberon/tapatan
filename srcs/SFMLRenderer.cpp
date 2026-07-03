@@ -70,21 +70,20 @@ void	SFMLRenderer::draw(const Game &game)
 	window.clear();
 
 	window.draw(sprtBackground);
-	drawPieces(game);
-
-	// if (game.getGameState() == GameState::Winner)
-		// drawWinner();
-
+	if (game.getGameState() == GameState::Finished)
+		drawWinner(game);
+	else
+		drawPieces(game);
 	window.display();
 }
 
 void	SFMLRenderer::drawPieces(const Game &game)
 {
-	for (int i = 0; i < 3; ++i)
+	for (int y = 0; y < 3; ++y)
 	{
-		for (int j = 0; j < 3; ++j)
+		for (int x = 0; x < 3; ++x)
 		{
-			char c = game.getGridCell({j, i});
+			char c = game.cell({x, y});
 			int	frame = 0;
 
 			if (c == 'X' || c == 'x')
@@ -94,17 +93,48 @@ void	SFMLRenderer::drawPieces(const Game &game)
 			else
 				frame = 0;
 
-			sprtPieces[j][i].setTextureRect(sf::IntRect({frame * 128, 0}, {128, 128}));
+			sprtPieces[x][y].setTextureRect(sf::IntRect({frame * 128, 0}, {128, 128}));
 
 			if (c == 'x' || c == 'o')
-				sprtPieces[j][i].setColor(sf::Color(255, 255, 255, 128)); // 50% transparent
+				sprtPieces[x][y].setColor(sf::Color(255, 255, 255, 128)); // 50% transparent
 			else
-				sprtPieces[j][i].setColor(sf::Color(255, 255, 255, 255)); // 0% transparent
+				sprtPieces[x][y].setColor(sf::Color(255, 255, 255, 255)); // 0% transparent
 
-			this->window.draw(sprtPieces[j][i]);
+			this->window.draw(sprtPieces[x][y]);
 		}
 	}
 }
+
+void	SFMLRenderer::drawWinner(const Game &game)
+{
+	int	w = game.getPlayerTurn() == 1 ? 'X' : 'O';
+
+	for (int y = 0; y < 3; ++y)
+	{
+		for (int x = 0; x < 3; ++x)
+		{
+			char c = game.cell({x, y});
+			int	frame = 0;
+
+			if (c == 'X' || c == 'x')
+				frame = 1;
+			else if (c == 'O' || c == 'o')
+				frame = 2;
+			else
+				frame = 0;
+
+			sprtPieces[x][y].setTextureRect(sf::IntRect({frame * 128, 0}, {128, 128}));
+
+			if (game.cell(x, y) == w)
+				sprtPieces[x][y].setColor(sf::Color(255, 255, 255, 255)); // 0% transparent
+			else
+				sprtPieces[x][y].setColor(sf::Color(255, 255, 255, 128)); // 50% transparent
+
+			this->window.draw(sprtPieces[x][y]);
+		}
+	}
+}
+
 
 const sf::FloatRect (& SFMLRenderer::getPiecesHitbox() const)[3][3]
 {

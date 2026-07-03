@@ -29,6 +29,7 @@ public:
 	void	draw(const Game &game);
 	void	drawBoard(const Game &game);
 	void	drawPieces(const Game &game);
+	void	drawWinner(const Game &game);
 
 	const sf::FloatRect (& getPiecesHitbox() const)[3][3];
 };

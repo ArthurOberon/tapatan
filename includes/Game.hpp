@@ -23,9 +23,13 @@ private:
 
 	int	applyAction(const s_Action action);
 
-	int	checkWin() const;
+	int	checkWin();
 
-	char	getGridCell(s_vector2	pos) const;
+	char &	cell(s_vector2	pos);
+	char &	cell(int x, int y);
+
+	char const &	cell(s_vector2	pos) const;
+	char const &	cell(int x, int y) const;
 
 	int	getPlayerTurn() const;
 	
@@ -35,6 +39,8 @@ private:
 	void	addOneRound();
 
 	GameState	getGameState() const;
+	const s_vector2 (&getWinGrid() const)[3];
+
 	void	setGameStateFinish();
 
 };

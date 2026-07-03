@@ -24,7 +24,6 @@ void	playShell(Game & game)
 		r = game.applyAction(action);
 		if (r == -1)
 			break ;
-		renderer.draw(game);
 
 		if (game.getGameState() == GameState::Playing)
 		{
@@ -34,6 +33,7 @@ void	playShell(Game & game)
 			if (r && game.getGameState() == GameState::Playing)
 				game.addOneRound();
 		}
+		renderer.draw(game);
 	}
 }
 
@@ -63,7 +63,6 @@ void	playSFML(Game & game)
 			renderer.closeWindow();
 			break ;
 		}
-		renderer.draw(game);
 
 		if (game.getGameState() == GameState::Playing)
 		{
@@ -73,6 +72,7 @@ void	playSFML(Game & game)
 			if (r && game.getGameState() == GameState::Playing)
 				game.addOneRound();
 		}
+		renderer.draw(game);
 	}
 }
 

@@ -12,5 +12,6 @@ public:
 	~ShellRenderer();
 
 	void	draw(const Game & game);
-	void	drawWinner(const int player) const;
+	void	drawPieces(const Game & game);
+	void	drawWinner(const Game & game) const;
 };

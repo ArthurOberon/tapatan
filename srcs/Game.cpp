@@ -34,10 +34,6 @@ int	Game::applyAction(const s_Action action)
 		}
 		else if (gameState == GameState::Finished)
 		{
-			gameState = GameState::Winner;
-		}
-		else if (gameState == GameState::Winner)
-		{
 			gameState = GameState::Quit;
 		}
 		break;
@@ -51,7 +47,7 @@ int	Game::applyAction(const s_Action action)
 	return r;
 }
 
-int	Game::checkWin() const
+int	Game::checkWin()
 {
 	char	c;
 	int	count = 0;
@@ -67,7 +63,7 @@ int	Game::checkWin() const
 		count = 0;
 		for (int y = 0; y < 3; ++y)
 		{
-			if (grid[y][x] == c)
+			if (cell(x, y) == c)
 			{
 				++count;
 				if (count == 3)
@@ -81,7 +77,7 @@ int	Game::checkWin() const
 		count = 0;
 		for (int x = 0; x < 3; ++x)
 		{
-			if (grid[y][x] == c)
+			if (cell(x, y) == c)
 			{
 				++count;
 				if (count == 3)
@@ -90,12 +86,11 @@ int	Game::checkWin() const
 		}
 	}
 	// check diag
-	if ((grid[0][0] == c && grid[1][1] == c && grid[2][2] == c)
-		|| (grid[0][2] == c && grid[1][1] == c && grid[2][0] == c))
+	if ((cell(0, 0) == c && cell(1, 1) == c && cell(2, 2) == c)
+		|| (cell(0, 2) == c && cell(1, 1) == c && cell(2, 0) == c))
 	{
 		return 1;
 	}
-
 	return 0;
 }
 
@@ -135,7 +130,7 @@ int	Game::selectCell(s_vector2 cell_pos)
 	char	*cursor_square;
 	s_vector2 mov_p_pos;
 
-	cursor_square = &(grid[cell_pos.y][cell_pos.x]);
+	cursor_square = &cell(cell_pos.x, cell_pos.y);
 	if (round < 6)
 	{
 		if (*cursor_square == ' ')
@@ -150,15 +145,30 @@ int	Game::selectCell(s_vector2 cell_pos)
 	else
 	{
 		mov_p_pos = piece_mov.get_pos();
-		r = piece_mov.mov_piece(turn, cell_pos, cursor_square, &(grid[mov_p_pos.y][mov_p_pos.x]));
+		r = piece_mov.mov_piece(turn, cell_pos, cursor_square, &cell(mov_p_pos));
 	}
 
 	return r;
 }
 
-char	Game::getGridCell(s_vector2	pos) const
+char &	Game::cell(s_vector2 pos)
 {
-	return grid[pos.x][pos.y];
+	return grid[pos.y][pos.x];
+}
+
+char &	Game::cell(int x, int y)
+{
+    return grid[y][x];
+}
+
+char const &	Game::cell(s_vector2 pos) const
+{
+	return grid[pos.y][pos.x];
+}
+
+char const &	Game::cell(int x, int y) const
+{
+    return grid[y][x];
 }
 
 int	Game::getPlayerTurn() const
