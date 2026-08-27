@@ -32,8 +32,6 @@ $(NAME): $(OBJS) $(DEPS)
 	@$(CXX) $(CXXFLAGS) $(INCLUDES_H) $(OBJS) -o $(NAME) -lncurses -lsfml-graphics -lsfml-window -lsfml-system
 	@echo "\e[32;1mDone !\e[0m"
 
-bonus: all
-
 clean:
 	@rm -rf $(OBJ_DIR)
 	@echo "\e[31;1mObject files removed.\e[0m"
@@ -47,4 +45,4 @@ re:		fclean all
 clear:
 	clear
 
-.PHONY = all bonus clean fclean re
+.PHONY = all clean fclean re

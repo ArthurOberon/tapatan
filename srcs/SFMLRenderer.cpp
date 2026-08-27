@@ -7,15 +7,15 @@ SFMLRenderer::SFMLRenderer(/* args */)
 									{{83, 500}, {500, 500}, {916, 500}},
 									{{83, 916}, {500, 916}, {916, 916}}};
 	
-	if (!txtBackground.loadFromFile("ressouces/background.png"))
+	if (!txtBackground.loadFromFile("resources/background.png"))
 	{
-		std::cerr << "File ./ressouces/background.png not found" << std::endl;
+		std::cerr << "File ./resources/background.png not found" << std::endl;
 		exit(1);
 	}
 
-	if (!txtPieces.loadFromFile("ressouces/pieces.png"))
+	if (!txtPieces.loadFromFile("resources/pieces.png"))
 	{
-		std::cerr << "File ./ressouces/piece.png not found" << std::endl;
+		std::cerr << "File ./resources/piece.png not found" << std::endl;
 		exit(1);
 	}
 
